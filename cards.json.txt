@@ -1,0 +1,29 @@
+[
+  {
+    "lang": "en",
+    "length": "short",
+    "word": "awkward",
+    "situation": "서로 어떻게 반응해야 할지 몰라 공기가 애매해진 순간",
+    "example": "엘리베이터에서 전 연인을 우연히 만났을 때",
+    "sentence": "This is awkward.",
+    "meaning": "진짜 어색하다."
+  },
+  {
+    "lang": "en",
+    "length": "long",
+    "word": "overwhelmed",
+    "situation": "할 일이 계속 쌓여 정리할 여유가 없는 상태",
+    "example": "메일, 메신저, 일정이 한꺼번에 몰린 오전",
+    "sentence": "I’m feeling a bit overwhelmed with everything right now.",
+    "meaning": "지금 모든 게 한꺼번에 몰려서 벅차다."
+  },
+  {
+    "lang": "jp",
+    "level": "N3+",
+    "word": "気まずい（きまずい）",
+    "situation": "서로 아무 잘못은 없지만 분위기가 불편해진 상태",
+    "example": "엘리베이터에서 전 연인을 우연히 만났을 때",
+    "sentence": "ちょっと気まずいですね。",
+    "meaning": "좀 어색하다."
+  }
+]
