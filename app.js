@@ -2,11 +2,9 @@ const TZ = "Asia/Seoul";
 
 function getSeoulDate() {
   const now = new Date();
-  const seoul = new Date(
-    now.toLocaleString("en-US", { timeZone: TZ })
-  );
+  const seoul = new Date(now.toLocaleString("en-US", { timeZone: TZ }));
   if (seoul.getHours() < 7) seoul.setDate(seoul.getDate() - 1);
-  return seoul.toISOString().slice(0, 10); // YYYY-MM-DD
+  return seoul.toISOString().slice(0, 10);
 }
 
 function seededRandom(seed) {
@@ -19,7 +17,7 @@ function seededRandom(seed) {
 }
 
 async function loadTodayCards() {
-  const res = await fetch("cards.json");
+  const res = await fetch("./cards.json");
   const cards = await res.json();
 
   const seed = getSeoulDate();
@@ -27,17 +25,31 @@ async function loadTodayCards() {
 
   const enShort = cards.filter(c => c.lang === "en" && c.length === "short");
   const enLong  = cards.filter(c => c.lang === "en" && c.length === "long");
-  const jpN3    = cards.filter(c => c.lang === "jp");
+  const jpN3    = cards.filter(c => c.lang === "jp" && (c.level || "").startsWith("N3"));
 
-  const pick = arr => arr[Math.floor(rand() * arr.length)];
+  // 🔎 디버그(현재 데이터 개수 확인)
+  console.log({ seed, enShort: enShort.length, enLong: enLong.length, jpN3: jpN3.length });
 
-  const today = [pick(enShort), pick(enLong), pick(jpN3)];
+  const pick = (arr, label) => {
+    if (!arr.length) {
+      throw new Error(`No candidates for ${label}. Check cards.json values.`);
+    }
+    return arr[Math.floor(rand() * arr.length)];
+  };
+
+  const today = [
+    pick(enShort, "en short"),
+    pick(enLong, "en long"),
+    pick(jpN3, "jp N3+")
+  ];
+
   render(today);
 }
 
 function render(cards) {
   const root = document.getElementById("cards");
   root.innerHTML = "";
+
   cards.forEach(c => {
     const el = document.createElement("div");
     el.className = "card";
@@ -52,4 +64,8 @@ function render(cards) {
   });
 }
 
-loadTodayCards();
+loadTodayCards().catch(err => {
+  console.error(err);
+  document.getElementById("cards").innerHTML =
+    `<div class="card"><h2>데이터 오류</h2><p>${err.message}</p></div>`;
+});
