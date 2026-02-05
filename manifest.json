@@ -1,1 +1,9 @@
-
+{
+  "name": "Morning Scene Words",
+  "short_name": "SceneWords",
+  "start_url": "/ENJP/",
+  "scope": "/ENJP/",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#fafafa"
+}
