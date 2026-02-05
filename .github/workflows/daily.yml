@@ -1,8 +1,8 @@
 name: Daily Cards
 
-on:
+"on":
   schedule:
-    - cron: "0 22 * * *"
+    - cron: "0 22 * * *"   # 한국시간 오전 7시
   workflow_dispatch:
 
 permissions:
