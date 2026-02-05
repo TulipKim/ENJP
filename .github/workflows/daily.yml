@@ -1,1 +1,38 @@
+name: Daily Cards
+
+on:
+  schedule:
+    - cron: "0 22 * * *"  # 07:00 KST (UTC 기준 전날 22:00)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install OpenAI SDK
+        run: pip install openai
+
+      - name: Generate today.json
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/generate_today.py
+
+      - name: Commit & push updated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add today.json history.json
+          git commit -m "daily: update cards" || echo "No changes"
+          git push
 
